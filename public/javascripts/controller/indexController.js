@@ -1,3 +1,5 @@
+
+
 app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=>
 {   $scope.messages=[];
    $scope.players={};
@@ -14,25 +16,29 @@ app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=
         reconnectionAttempts:3,
         reconnectionDelay:500,
       
-    }).then((socket)=>{
-        socket.emit("newUser",{username})
-        socket.on('newUser',(data)=>{
-           const messageData={
-               type:{
-                   code:0,//0 client ,  1 server 
-                    status:1 //0 disconnect , 1 login                    
-               },
-               username:data.username
-           };
-           console.log(messageData);
-           
-            $scope.messages.push(messageData);
-            $scope.$apply();
-        });
-        socket.on('initPlayers',(players)=>{
-            $scope.players=players;
-            $scope.$apply();
-        })
+    }).then((socket) => {
+				socket.emit('newUser', { username });
+
+				socket.on('initPlayers', (players) => {
+					$scope.players = players;
+					$scope.$apply();
+				});
+
+				socket.on('newUser', (data) => {
+					const messageData = {
+						type: {
+							code: 0, // server or user message
+							message: 1 // login or disconnect message
+						}, // info
+						username: data.username,
+
+					};
+
+					$scope.messages.push(messageData);
+					$scope.players[data.id] = data;
+					$scope.$apply();
+				});
+
         socket.on('disUser',(data)=>{
             const messageData={
                 type:{
@@ -42,17 +48,28 @@ app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=
                 username:data.username
             };
             $scope.messages.push(messageData);
-            $scope.$apply();
+               delete $scope.players[data.id];
+               $scope.$apply();
+         
         });
-        let animate=false;
-        $scope.onClickPlayer=($event)=>{
+        socket.on('animate',(data)=>{
+            
+            $('#'+data.socketId).animate({"left": data.x,"top": data.y});
+            
+        });
+        let animate = true
+        $scope.onClickPlayer=($event)=>{    
+            if(animate){
             console.log($event.offsetX);
             console.log($event.offsetY);    
-            if(!animate){
-            $('#'+socket.id).animate({"left": $event.offsetX-40,"top": $event.offsetY-40},()=>{
-                animate=false;
-            });
-            animate=true;
+            
+        
+                animate =true;
+                let x=$event.offsetX-40;
+                let y=$event.offsetY-40;
+                socket.emit("animate",{x,y});
+            $('#'+socket.id).animate({"left": x,"top": y});
+        
         }
         }
           
