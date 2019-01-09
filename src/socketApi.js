@@ -7,6 +7,7 @@ const users ={};
 io.on('connection',(socket)=>{
     socket.on("newUser",(data)=>{
         const defaultData={
+            id:socket.id,
             position:{
                 x:0,
                 y:0

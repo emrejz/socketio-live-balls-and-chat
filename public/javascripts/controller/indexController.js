@@ -43,7 +43,18 @@ app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=
             };
             $scope.messages.push(messageData);
             $scope.$apply();
-        })
+        });
+        let animate=false;
+        $scope.onClickPlayer=($event)=>{
+            console.log($event.offsetX);
+            console.log($event.offsetY);    
+            if(!animate){
+            $('#'+socket.id).animate({"left": $event.offsetX-40,"top": $event.offsetY-40},()=>{
+                animate=false;
+            });
+            animate=true;
+        }
+        }
           
     })
     .catch(err=>{
