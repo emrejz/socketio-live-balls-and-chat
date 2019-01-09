@@ -1,6 +1,9 @@
 const socketio=require('socket.io');
 const io=socketio();
 
+const randomColor=require('../helpers/randomColor');
+
+
 const socketApi={};
 socketApi.io=io;
 const users ={};
@@ -12,6 +15,7 @@ io.on('connection',(socket)=>{
                 x:0,
                 y:0
             },
+            color:randomColor()
 
         };
         const userData=Object.assign(data,defaultData);
@@ -24,7 +28,7 @@ io.on('connection',(socket)=>{
         delete users[socket.id]
     });
     socket.on("animate",(data)=>{
-        users[socket.id].position.x=data.x;
+       users[socket.id].position.x=data.x;
         users[socket.id].position.y=data.y;
         socket.broadcast.emit("animate",{
             socketId:socket.id,
