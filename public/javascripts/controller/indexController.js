@@ -2,7 +2,7 @@ app.controller('indexController', ['$scope', "indexFactory", ($scope, indexFacto
     $scope.messages = [];
     $scope.players = {};
     $scope.init = () => {
-        const username = this.prompt("enter username");
+        const username = this.prompt("enter nickname for chat and play");
         if (username) {
             initSocket(username);
         } else {
