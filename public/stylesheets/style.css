@@ -7,7 +7,7 @@ body{
 }
 
 .gameArea{
-    min-height:450px;
+    min-height:400px;
     position: relative;
 }
 
@@ -55,7 +55,7 @@ body{
     left: 0;
     width: 160px;
     display: none;
-    left:-50%;
+    left:-51%;
 }
 
 .chat{
