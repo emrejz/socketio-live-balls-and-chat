@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start:dev": "nodemon ./bin/www",
     "start": "node ./bin/www",
+
+    "start:dev": "nodemon ./bin/www",
+    
     "postinstall": "./node_modules/bower/bin/bower install"
   },
   "dependencies": {
