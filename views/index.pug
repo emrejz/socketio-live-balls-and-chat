@@ -5,8 +5,7 @@ block content
     .ui.one.column.stackable.center.aligned.page.grid.margin-30
       .column.twelve.wide
         .ui.stacked.segment.gameArea(ng-click="onClickPlayer($event)")
-          .circle(
-            ng-repeat="player in players",
+          .circle(ng-repeat="player in players",
             ng-style="{'background-color':player.color,'left': player.position.x + 'px', 'top': player.position.y + 'px' }",
             id="{{player.id}}",
             

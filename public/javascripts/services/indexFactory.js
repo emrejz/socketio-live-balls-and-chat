@@ -11,9 +11,9 @@ app.factory('indexFactory',[()=>
             });
             socket.on("connect_error",()=>{
                 reject(new Error("connect_error"))
-            })
+            });
                 
-            })
+            });
         }
         return{
             connectSocket
