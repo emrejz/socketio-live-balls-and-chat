@@ -17,11 +17,25 @@ app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=
         socket.emit("newUser",{username})
         socket.on('newUser',(data)=>{
            const messageData={
-               type:0,
+               type:{
+                   code:0,//0 client ,  1 server 
+                    status:1 //0 disconnect , 1 login                    
+               },
                username:data.username
            };
            console.log(messageData);
            
+            $scope.messages.push(messageData);
+            $scope.$apply();
+        });
+        socket.on('disUser',(data)=>{
+            const messageData={
+                type:{
+                    code:0,//0 client ,  1 server 
+                    status:0 //0 disconnect , 1 login                    
+                },
+                username:data.username
+            };
             $scope.messages.push(messageData);
             $scope.$apply();
         })
