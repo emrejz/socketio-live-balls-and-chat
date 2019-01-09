@@ -1,5 +1,6 @@
 app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=>
 {   $scope.messages=[];
+   $scope.players={};
     $scope.init=()=>{
         const username=this.prompt("enter username");
         if(username){
@@ -28,6 +29,10 @@ app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=
             $scope.messages.push(messageData);
             $scope.$apply();
         });
+        socket.on('initPlayers',(players)=>{
+            $scope.players=players;
+            $scope.$apply();
+        })
         socket.on('disUser',(data)=>{
             const messageData={
                 type:{

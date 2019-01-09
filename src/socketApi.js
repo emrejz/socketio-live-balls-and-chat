@@ -16,6 +16,7 @@ io.on('connection',(socket)=>{
         const userData=Object.assign(data,defaultData);
         users[socket.id]=userData;
         socket.broadcast.emit("newUser",users[socket.id]);
+        socket.emit('initPlayers',users);
     });
     socket.on("disconnect",()=>{
         socket.broadcast.emit('disUser',users[socket.id]);
