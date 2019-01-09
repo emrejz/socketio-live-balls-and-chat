@@ -36,6 +36,11 @@ io.on('connection',(socket)=>{
             y:data.y
         })
     })
+    socket.on("msg",(data)=>{
+    
+        socket.broadcast.emit("msg1",data);
+        
+    })
 });
 
 module.exports=socketApi;

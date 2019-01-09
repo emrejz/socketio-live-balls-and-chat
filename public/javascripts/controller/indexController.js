@@ -11,6 +11,10 @@ app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=
             return false;
         }
     };
+    const scrlTop=()=>{
+        const element=document.getElementById("chat-area");
+        element.scrollTop=element.scrollHeight;
+    }
     function initSocket(username) {
        indexFactory.connectSocket("http://localhost:3000",{
         reconnectionAttempts:3,
@@ -28,7 +32,7 @@ app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=
 					const messageData = {
 						type: {
 							code: 0, // server or user message
-							message: 1 // login or disconnect message
+							status: 1 // login or disconnect message
 						}, // info
 						username: data.username,
 
@@ -72,6 +76,34 @@ app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=
         
         }
         }
+        $scope.newMessage=()=>{
+            let message=$scope.message;
+            const messageData = {
+                type: {
+                    code: 1, // server or user message
+                    
+                }, // info
+                username,
+                text:message
+
+            };
+            $scope.messages.push(messageData);
+            $scope.message="";
+           socket.emit("msg",messageData); 
+          
+           setTimeout(() => {
+            scrlTop();
+           });
+           
+        };
+        socket.on("msg1",(data)=>{
+            console.log(data);
+            
+            $scope.messages.push(data);
+            $scope.$apply();
+            scrlTop();
+            
+        })
           
     })
     .catch(err=>{
