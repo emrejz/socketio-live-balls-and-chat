@@ -1,0 +1,14 @@
+{
+  "name": "socketio-live-chat-and-balls",
+  "description": "",
+  "main": "",
+  "authors": [
+    "emrejz <emre.kayacan@msn.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/emrejz/socketio-live-balls-and-chat",
+  "dependencies": {
+    "angular": "^1.7.5",
+    "semantic": "^2.4.1"
+  }
+}
