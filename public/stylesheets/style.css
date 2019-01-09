@@ -53,8 +53,9 @@ body{
     background-color: #f1f1f1;
     padding: 3px 5px;
     left: 0;
-    width: 100%;
-    display: inline-block;
+    width: 160px;
+    display: none;
+    left:-50%;
 }
 
 .chat{

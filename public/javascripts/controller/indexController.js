@@ -11,10 +11,16 @@ app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=
             return false;
         }
     };
+    const showBubbleMsg=(id,message)=>{
+        $('#'+id).find('.message').show().html(message);
+        setTimeout(() => {
+            $('#'+id).find('.message').hide();
+        }, 2000);
+    };
     const scrlTop=()=>{
         const element=document.getElementById("chat-area");
         element.scrollTop=element.scrollHeight;
-    }
+    };
     function initSocket(username) {
        indexFactory.connectSocket("http://localhost:3000",{
         reconnectionAttempts:3,
@@ -94,6 +100,8 @@ app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=
            setTimeout(() => {
             scrlTop();
            });
+
+           showBubbleMsg(socket.id,message);
            
         };
         socket.on("msg1",(data)=>{
@@ -102,6 +110,7 @@ app.controller('indexController',['$scope',"indexFactory",($scope,indexFactory)=
             $scope.messages.push(data);
             $scope.$apply();
             scrlTop();
+            showBubbleMsg(socket.id,data.text);
             
         })
           
